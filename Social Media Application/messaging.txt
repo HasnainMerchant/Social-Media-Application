@@ -1,0 +1,21 @@
+#queris for messaging
+CREATE TABLE Messaging(
+message_ID INT PRIMARY KEY,
+sender_name VARCHAR FOREIGN KEY,
+receiver_name VARCHAR FOREIGN KEY,
+Message VARCHAR (1000),
+Time_Stamp DATETIME
+
+INSERT INTO Messaging(message_ID, Message,Time_Stamp);
+
+#query for delete message
+
+DELIMITER //
+create TRIGGER delTrigger 
+AFTER DELETE
+ON messaging 
+FOR EACH ROW
+BEGIN
+	INSERT into del_msg VALUES(old.sender_uname,old.Message, old.Time_Stamp);
+END //
+yOuCaNtGuEsSmYdEfAlTpAsSwOrD1911

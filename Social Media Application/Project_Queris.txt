@@ -1,0 +1,108 @@
+1. Select Information for the username
+select * from users where Username="test1";
+
+2.Update password of user
+UPDATE users SET password = "" where Username="test1";
+
+3.Update email of user
+UPDATE users SET Email = "" where Username="test1";
+
+4.Update phone number of user
+UPDATE users SET Phone_Number = "" where Username="test1";
+
+5.Update username of user
+UPDATE users SET Username = "" where Username="test1";
+
+//6.Creating a Login function
+
+7.Creating a user admin view which can view every detail of the users
+CREATE VIEW user_admin AS (select * from users GROUP BY username);
+
+8.Create a contact admin view 
+CREATE VIEW contact_admin AS (select * from contacts GROUP BY username);
+
+9.Create a message admin view 
+CREATE VIEW msg_admin AS (select * from messaging GROUP BY sender_uname);
+
+10.Create a post admin view
+CREATE VIEW post_admin AS (select * from posts GROUP BY post_from);
+
+8.Delete Account
+DELETE FROM users WHERE Username=" " and Password = " ";
+
+9.CREATE ROLE admin 
+CREATE ROLE admin;
+
+10.Grant privileges on admin
+GRANT INSERT, UPDATE, DELETE ON [database name] TO admin;
+
+11.Create role user
+CREATE ROLE user;
+
+12.Revoke privieges on user
+REVOKE UPDATE, DELETE ON [database name] TO user;
+
+13.Function To Count Number Of Contacts
+
+DELIMITER //
+CREATE FUNCTION count_contacts (user varchar(50))
+RETURNS INT
+BEGIN
+   DECLARE value INT;
+
+   SET value = 0;
+   SELECT count(*) INTO value FROM contacts WHERE contacts.username = user;
+
+   RETURN value;
+END; //
+DELIMITER ;
+
+14.Function To Count Number of Posts
+
+DELIMITER //
+CREATE FUNCTION count_posts (user varchar(50))
+RETURNS INT
+BEGIN
+   DECLARE value INT;
+
+   SET value = 0;
+   SELECT count(*) INTO value FROM posts WHERE posts.post_from = user;
+
+   RETURN value;
+END; //
+DELIMITER ;
+
+15.Function to count number of messages
+DELIMITER //
+CREATE FUNCTION count_messages (user varchar(50))
+RETURNS INT
+BEGIN
+   DECLARE value INT;
+
+   SET value = 0;
+   SELECT count(*) INTO value FROM messaging WHERE messaging.sender_uname = user;
+
+   RETURN value;
+END; //
+DELIMITER ;
+
+16.Procedure to Display All Contacts
+
+DELIMITER //
+CREATE PROCEDURE display_contacts (IN user varchar(50))
+BEGIN
+
+   SELECT first_Name,Last_name,contact_uname FROM contacts WHERE contacts.username = user;
+
+END; //
+DELIMITER ;
+
+17.Trigger
+create TRIGGER delTrigger 
+AFTER INSERT
+ON contacts 
+FOR EACH ROW
+BEGIN
+    INSERT into users(username,mobile,email,first_Name,last_Name) VALUES(old.contact_uname,old.phone_number, old.email,old.first_Name,old.last_Name);
+END
+
