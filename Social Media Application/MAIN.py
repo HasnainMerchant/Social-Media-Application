@@ -4,8 +4,8 @@ import mysql.connector
 
 mydb = mysql.connector.connect(
     host="localhost",
-    user="root",
-    password="mArvelisthebest@123.",#your database passsword
+    user="",
+    password="",#your database passsword
     database="dbms_mini_proj"#create your own database from mysql and add its name here
 )
 mycursor = mydb.cursor()
